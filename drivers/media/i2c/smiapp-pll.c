@@ -411,6 +411,82 @@ int smiapp_pll_calculate(struct device *dev, struct smiapp_pll_limits *limits,
 
 	return rval;
 }
+
+int smiapp_pll_calculate(struct device *dev, struct smiapp_pll_limits *limits,
+			 struct smiapp_pll *pll)
+{
+	uint32_t lane_op_clock_ratio;
+	uint32_t mul, div;
+	unsigned int i;
+	int rval = -EINVAL;
+
+	if (pll->flags & SMIAPP_PLL_FLAG_OP_PIX_CLOCK_PER_LANE)
+		lane_op_clock_ratio = pll->csi2.lanes;
+	else
+		lane_op_clock_ratio = 1;
+	dev_dbg(dev, "lane_op_clock_ratio: %d\n", lane_op_clock_ratio);
+
+	dev_dbg(dev, "binning: %dx%d\n", pll->binning_horizontal,
+		pll->binning_vertical);
+
+	switch (pll->bus_type) {
+	case SMIAPP_PLL_BUS_TYPE_CSI2:
+		/* CSI transfers 2 bits per clock per lane; thus times 2 */
+		pll->pll_op_clk_freq_hz = pll->link_freq * 2
+			* (pll->csi2.lanes / lane_op_clock_ratio);
+		break;
+	case SMIAPP_PLL_BUS_TYPE_PARALLEL:
+		pll->pll_op_clk_freq_hz = pll->link_freq * pll->bits_per_pixel
+			/ DIV_ROUND_UP(pll->bits_per_pixel,
+				       pll->parallel.bus_width);
+		break;
+	default:
+		return -EINVAL;
+	}
+
+	/* Figure out limits for pre-pll divider based on extclk */
+	dev_dbg(dev, "min / max pre_pll_clk_div: %d / %d\n",
+		limits->min_pre_pll_clk_div, limits->max_pre_pll_clk_div);
+	limits->max_pre_pll_clk_div =
+		min_t(uint16_t, limits->max_pre_pll_clk_div,
+		      clk_div_even(pll->ext_clk_freq_hz /
+				   limits->min_pll_ip_freq_hz));
+	limits->min_pre_pll_clk_div =
+		max_t(uint16_t, limits->min_pre_pll_clk_div,
+		      clk_div_even_up(
+			      DIV_ROUND_UP(pll->ext_clk_freq_hz,
+					   limits->max_pll_ip_freq_hz)));
+	dev_dbg(dev, "pre-pll check: min / max pre_pll_clk_div: %d / %d\n",
+		limits->min_pre_pll_clk_div, limits->max_pre_pll_clk_div);
+
+	i = gcd(pll->pll_op_clk_freq_hz, pll->ext_clk_freq_hz);
+	mul = div_u64(pll->pll_op_clk_freq_hz, i);
+	div = pll->ext_clk_freq_hz / i;
+	dev_dbg(dev, "mul %d / div %d\n", mul, div);
+
+	limits->min_pre_pll_clk_div =
+		max_t(uint16_t, limits->min_pre_pll_clk_div,
+		      clk_div_even_up(
+			      DIV_ROUND_UP(mul * pll->ext_clk_freq_hz,
+					   limits->max_pll_op_freq_hz)));
+	dev_dbg(dev, "pll_op check: min / max pre_pll_clk_div: %d / %d\n",
+		limits->min_pre_pll_clk_div, limits->max_pre_pll_clk_div);
+
+	for (pll->pre_pll_clk_div = limits->min_pre_pll_clk_div;
+	     pll->pre_pll_clk_div <= limits->max_pre_pll_clk_div;
+	     pll->pre_pll_clk_div += 2 - (pll->pre_pll_clk_div & 1)) {
+		rval = __smiapp_pll_calculate(dev, limits, pll, mul, div,
+					      lane_op_clock_ratio);
+		if (rval)
+			continue;
+
+		print_pll(dev, pll);
+		return 0;
+	}
+
+	dev_info(dev, "unable to compute pre_pll divisor\n");
+	return rval;
+}
 EXPORT_SYMBOL_GPL(smiapp_pll_calculate);
 
 MODULE_AUTHOR("Sakari Ailus <sakari.ailus@maxwell.research.nokia.com>");
