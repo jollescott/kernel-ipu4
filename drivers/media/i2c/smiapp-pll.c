@@ -170,7 +170,7 @@ int smiapp_pll_calculate(struct device *dev, struct smiapp_pll_limits *limits,
 		more_mul_max);
 	/* Don't go above the division capability of op sys clock divider. */
 	more_mul_max = min(more_mul_max,
-			   limits->max_op_sys_clk_div * pll->pre_pll_clk_div
+			   limits->op.max_sys_clk_div * pll->pre_pll_clk_div
 			   / div);
 	dev_dbg(dev, "more_mul_max: max_op_sys_clk_div check: %d\n",
 		more_mul_max);
@@ -200,7 +200,7 @@ int smiapp_pll_calculate(struct device *dev, struct smiapp_pll_limits *limits,
 
 	more_mul_factor = lcm(div, pll->pre_pll_clk_div) / div;
 	dev_dbg(dev, "more_mul_factor: %d\n", more_mul_factor);
-	more_mul_factor = lcm(more_mul_factor, limits->min_op_sys_clk_div);
+	more_mul_factor = lcm(more_mul_factor, limits->op.min_sys_clk_div);
 	dev_dbg(dev, "more_mul_factor: min_op_sys_clk_div: %d\n",
 		more_mul_factor);
 	i = roundup(more_mul_min, more_mul_factor);
@@ -268,19 +268,19 @@ int smiapp_pll_calculate(struct device *dev, struct smiapp_pll_limits *limits,
 	dev_dbg(dev, "min_vt_div: %d\n", min_vt_div);
 	min_vt_div = max(min_vt_div,
 			 DIV_ROUND_UP(pll->pll_op_clk_freq_hz,
-				      limits->max_vt_pix_clk_freq_hz));
+				      limits->vt.max_pix_clk_freq_hz));
 	dev_dbg(dev, "min_vt_div: max_vt_pix_clk_freq_hz: %d\n",
 		min_vt_div);
 	min_vt_div = max_t(uint32_t, min_vt_div,
-			   limits->min_vt_pix_clk_div
-			   * limits->min_vt_sys_clk_div);
+			   limits->vt.min_pix_clk_div
+			   * limits->vt.min_sys_clk_div);
 	dev_dbg(dev, "min_vt_div: min_vt_clk_div: %d\n", min_vt_div);
 
-	max_vt_div = limits->max_vt_sys_clk_div * limits->max_vt_pix_clk_div;
+	max_vt_div = limits->vt.max_sys_clk_div * limits->vt.max_pix_clk_div;
 	dev_dbg(dev, "max_vt_div: %d\n", max_vt_div);
 	max_vt_div = min(max_vt_div,
 			 DIV_ROUND_UP(pll->pll_op_clk_freq_hz,
-				      limits->min_vt_pix_clk_freq_hz));
+				      limits->vt.min_pix_clk_freq_hz));
 	dev_dbg(dev, "max_vt_div: min_vt_pix_clk_freq_hz: %d\n",
 		max_vt_div);
 
@@ -288,28 +288,28 @@ int smiapp_pll_calculate(struct device *dev, struct smiapp_pll_limits *limits,
 	 * Find limitsits for sys_clk_div. Not all values are possible
 	 * with all values of pix_clk_div.
 	 */
-	min_sys_div = limits->min_vt_sys_clk_div;
+	min_sys_div = limits->vt.min_sys_clk_div;
 	dev_dbg(dev, "min_sys_div: %d\n", min_sys_div);
 	min_sys_div = max(min_sys_div,
 			  DIV_ROUND_UP(min_vt_div,
-				       limits->max_vt_pix_clk_div));
+				       limits->vt.max_pix_clk_div));
 	dev_dbg(dev, "min_sys_div: max_vt_pix_clk_div: %d\n", min_sys_div);
 	min_sys_div = max(min_sys_div,
 			  pll->pll_op_clk_freq_hz
-			  / limits->max_vt_sys_clk_freq_hz);
+			  / limits->vt.max_sys_clk_freq_hz);
 	dev_dbg(dev, "min_sys_div: max_pll_op_clk_freq_hz: %d\n", min_sys_div);
 	min_sys_div = clk_div_even_up(min_sys_div);
 	dev_dbg(dev, "min_sys_div: one or even: %d\n", min_sys_div);
 
-	max_sys_div = limits->max_vt_sys_clk_div;
+	max_sys_div = limits->vt.max_sys_clk_div;
 	dev_dbg(dev, "max_sys_div: %d\n", max_sys_div);
 	max_sys_div = min(max_sys_div,
 			  DIV_ROUND_UP(max_vt_div,
-				       limits->min_vt_pix_clk_div));
+				       limits->vt.min_pix_clk_div));
 	dev_dbg(dev, "max_sys_div: min_vt_pix_clk_div: %d\n", max_sys_div);
 	max_sys_div = min(max_sys_div,
 			  DIV_ROUND_UP(pll->pll_op_clk_freq_hz,
-				       limits->min_vt_pix_clk_freq_hz));
+				       limits->vt.min_pix_clk_freq_hz));
 	dev_dbg(dev, "max_sys_div: min_vt_pix_clk_freq_hz: %d\n", max_sys_div);
 
 	/*
@@ -324,13 +324,13 @@ int smiapp_pll_calculate(struct device *dev, struct smiapp_pll_limits *limits,
 		     sys_div += 2 - (sys_div & 1)) {
 			int pix_div = DIV_ROUND_UP(vt_div, sys_div);
 
-			if (pix_div < limits->min_vt_pix_clk_div
-			    || pix_div > limits->max_vt_pix_clk_div) {
+			if (pix_div < limits->vt.min_pix_clk_div
+			    || pix_div > limits->vt.max_pix_clk_div) {
 				dev_dbg(dev,
 					"pix_div %d too small or too big (%d--%d)\n",
 					pix_div,
-					limits->min_vt_pix_clk_div,
-					limits->max_vt_pix_clk_div);
+					limits->vt.min_pix_clk_div,
+					limits->vt.max_pix_clk_div);
 				continue;
 			}
 
@@ -377,36 +377,36 @@ int smiapp_pll_calculate(struct device *dev, struct smiapp_pll_limits *limits,
 	if (!rval)
 		rval = bounds_check(
 			dev, pll->op_sys_clk_div,
-			limits->min_op_sys_clk_div, limits->max_op_sys_clk_div,
+			limits->op.min_sys_clk_div, limits->op.max_sys_clk_div,
 			"op_sys_clk_div");
 	if (!rval)
 		rval = bounds_check(
 			dev, pll->op_pix_clk_div,
-			limits->min_op_pix_clk_div, limits->max_op_pix_clk_div,
+			limits->op.min_pix_clk_div, limits->op.max_pix_clk_div,
 			"op_pix_clk_div");
 	if (!rval)
 		rval = bounds_check(
 			dev, pll->op_sys_clk_freq_hz,
-			limits->min_op_sys_clk_freq_hz,
-			limits->max_op_sys_clk_freq_hz,
+			limits->op.min_sys_clk_freq_hz,
+			limits->op.max_sys_clk_freq_hz,
 			"op_sys_clk_freq_hz");
 	if (!rval)
 		rval = bounds_check(
 			dev, pll->op_pix_clk_freq_hz,
-			limits->min_op_pix_clk_freq_hz,
-			limits->max_op_pix_clk_freq_hz,
+			limits->op.min_pix_clk_freq_hz,
+			limits->op.max_pix_clk_freq_hz,
 			"op_pix_clk_freq_hz");
 	if (!rval)
 		rval = bounds_check(
 			dev, pll->vt_sys_clk_freq_hz,
-			limits->min_vt_sys_clk_freq_hz,
-			limits->max_vt_sys_clk_freq_hz,
+			limits->vt.min_sys_clk_freq_hz,
+			limits->vt.max_sys_clk_freq_hz,
 			"vt_sys_clk_freq_hz");
 	if (!rval)
 		rval = bounds_check(
 			dev, pll->vt_pix_clk_freq_hz,
-			limits->min_vt_pix_clk_freq_hz,
-			limits->max_vt_pix_clk_freq_hz,
+			limits->vt.min_pix_clk_freq_hz,
+			limits->vt.max_pix_clk_freq_hz,
 			"vt_pix_clk_freq_hz");
 
 	return rval;
