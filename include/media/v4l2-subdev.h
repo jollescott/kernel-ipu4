@@ -681,6 +681,18 @@ struct v4l2_subdev_ir_ops {
 				struct v4l2_subdev_ir_parameters *params);
 };
 
+/*
+ * Used for storing subdev pad information. This structure only needs
+ * to be passed to the pad op if the 'which' field of the main argument
+ * is set to V4L2_SUBDEV_FORMAT_TRY. For V4L2_SUBDEV_FORMAT_ACTIVE it is
+ * safe to pass NULL.
+ */
+struct v4l2_subdev_pad_config {
+	struct v4l2_mbus_framefmt try_fmt;
+	struct v4l2_rect try_crop;
+	struct v4l2_rect try_compose;
+};
+
 /**
  * struct v4l2_subdev_pad_config - Used for storing subdev pad information.
  *
