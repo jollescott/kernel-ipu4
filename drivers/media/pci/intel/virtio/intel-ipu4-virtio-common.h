@@ -34,8 +34,7 @@ struct ipu4_virtio_req {
 	unsigned int cmd;
 	unsigned int func_ret;
 	unsigned int op[MAX_NUMBER_OF_OPERANDS];
-	wait_queue_head_t *wait;
-	bool completed;
+	struct completion *wait;
 	u64 payload;
 	struct file *be_fh;
 };
