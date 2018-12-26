@@ -1258,7 +1258,7 @@ static int virt_ici_pipeline_init(void)
 	return 0;
 }
 
-static int virt_ici_init(void)
+static int virt_ici_init(struct ipu4_virtio_ctx *fe_ctx)
 {
 	struct virtual_stream *vstream;
 	int rval = 0, i;
@@ -1312,11 +1312,6 @@ static int virt_fe_probe(void)
 
 	return rval;
 }
-static int virt_fe_remove(void)
-{
-	ipu4_virtio_fe_req_queue_free();
-	return 0;
-}
 static void virt_ici_pipeline_exit(void)
 {
 	class_unregister(virt_pipeline_class);
@@ -1336,11 +1331,16 @@ static void virt_ici_exit(void)
 static int __init virt_ipu_init(void)
 {
     int rval = 0;
-    rval = virt_ici_init();
+
+    rval = virt_fe_probe();
+    if(rval)
+      return rval;
+
+    rval = virt_ici_init(g_fe_priv);
     if(rval)
         pr_warn("ipu virt: ISYS init failed\n");
 
-    rval = virt_psys_init();
+    rval = virt_psys_init(g_fe_priv);
     if(rval)
         pr_warn("ipu virt: PSYS init failed\n");
 
