@@ -615,7 +615,7 @@ static unsigned int stream_fop_poll(struct file *file, struct ici_stream_device 
 	rval = fe_ctx->bknd_ops->send_req(fe_ctx->domid, req, true,
 										IPU_VIRTIO_QUEUE_0);
 	if (rval) {
-		dev_err(&dev->dev, "polling failed\n");
+		dev_err(&strm_dev->dev, "polling failed\n");
 		ipu4_virtio_fe_req_queue_put(req);
 		return rval;
 	}
