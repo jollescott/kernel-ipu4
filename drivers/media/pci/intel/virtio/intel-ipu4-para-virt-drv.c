@@ -1218,6 +1218,13 @@ static int virt_ici_pipeline_init(void)
 		return rval;
 	}
 
+	virt_pipeline_class = class_create(THIS_MODULE, ICI_PIPELINE_DEVICE_NAME);
+	if (IS_ERR(virt_pipeline_class)) {
+		unregister_chrdev_region(virt_pipeline_dev_t, MAX_PIPELINE_DEVICES);
+		pr_err("Failed to register device class %s\n",	ICI_PIPELINE_DEVICE_NAME);
+		return PTR_ERR(virt_pipeline_class);
+	}
+
 	pipeline_dev = kzalloc(sizeof(*pipeline_dev), GFP_KERNEL);
 	if (!pipeline_dev)
 		return -ENOMEM;
@@ -1231,6 +1238,7 @@ static int virt_ici_pipeline_init(void)
 			return rval;
 	}
 
+	pipeline_dev->dev.class = virt_pipeline_class;
 	pipeline_dev->dev.devt = MKDEV(MAJOR_PIPELINE, MINOR_PIPELINE);
 	dev_set_name(&pipeline_dev->dev, "%s", ICI_PIPELINE_DEVICE_NAME);
 
@@ -1311,6 +1319,7 @@ static int virt_fe_remove(void)
 }
 static void virt_ici_pipeline_exit(void)
 {
+	class_unregister(virt_pipeline_class);
 	unregister_chrdev_region(virt_pipeline_dev_t, MAX_PIPELINE_DEVICES);
 	if (pipeline_dev)
 		kfree((void *)pipeline_dev);
