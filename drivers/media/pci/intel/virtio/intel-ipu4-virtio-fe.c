@@ -160,12 +160,7 @@ static int ipu_virtio_fe_send_req(int vmid, struct ipu4_virtio_req *req,
 	ipu_virtio_fe_register_buffer(ipu4_virtio_fe, req, sizeof(*req), idx);
 	wait_for_completion(req->wait);
 
-	if(ret)
-		return req->stat;
-	else {
-		pr_err("%s: send request timeout!!!", __func__);
-		return -1;
-	}
+	return req->stat;
 }
 static int ipu_virtio_fe_get_vmid(void)
 {

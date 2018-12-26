@@ -6,29 +6,14 @@
 #ifndef __IPU4_VIRTIO_COMMON_PSYS_H__
 #define __IPU4_VIRTIO_COMMON_PSYS_H__
 
-struct ipu_psys_manifest_wrap {
-	u64 psys_manifest;
-	u64 manifest_data;
-};
-
-struct ipu_psys_usrptr_map {
-	bool vma_is_io;
-	u64 page_table_ref;
-	size_t npages;
-	u64 len;
-	void *userptr;
-};
-
-struct ipu_psys_buffer_wrap {
-	struct hlist_node node;
-	u64 psys_buf;
-	struct ipu_psys_usrptr_map map;
-};
-
-struct ipu_psys_command_wrap {
-	u64 psys_command;
-	u64 psys_manifest;
-	u64 psys_buffer;
+struct ipu_psys_manifest_virt {
+	uint32_t index;
+	uint32_t size;
+	//since the manifest memory is allocated by user space
+	//and the struct ia_cipr_buffer_t is not expose to
+	//driver. We assume the size is less than 1 page and
+	//allocate the max.
+	uint8_t manifest[PAGE_SIZE];
 };
 
 #endif
