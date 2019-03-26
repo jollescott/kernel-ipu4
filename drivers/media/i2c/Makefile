@@ -146,3 +146,12 @@ obj-$(CONFIG_VIDEO_VPX3220) += vpx3220.o
 obj-$(CONFIG_VIDEO_VS6624) += vs6624.o
 obj-$(CONFIG_VIDEO_WM8739) += wm8739.o
 obj-$(CONFIG_VIDEO_WM8775) += wm8775.o
+obj-$(CONFIG_VIDEO_S5K4ECGX)	+= s5k4ecgx.o
+obj-$(CONFIG_VIDEO_SMIAPP_PLL)	+= smiapp-pll.o
+
+obj-$(CONFIG_VIDEO_CRLMODULE) += crlmodule/
+obj-$(CONFIG_VIDEO_TI964) += ti964.o
+ti960-objs := ti953-ser.o ti960-des.o
+obj-$(CONFIG_VIDEO_TI960) += ti960.o
+obj-$(CONFIG_VIDEO_CRLMODULE_LITE) += crlmodule-lite/
+obj-$(CONFIG_VIDEO_INTEL_ICI) += ici/
