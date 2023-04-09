@@ -7,7 +7,7 @@ config VIDEO_INTEL_IPU
 	select VIDEOBUF2_DMA_CONTIG
 	select PHYS_ADDR_T_64BIT
 	select COMMON_CLK
-	---help---
+	help
 	Say Y here!
 
 choice
@@ -17,12 +17,12 @@ choice
 
 config VIDEO_INTEL_IPU4
 	bool "Compile for IPU4 driver"
-	---help---
+	help
 	Say Y here!
 
 config VIDEO_INTEL_IPU4P
 	bool "Compile for IPU4P driver"
-	---help---
+	help
 	Say Y here!
 
 endchoice
@@ -34,14 +34,14 @@ choice
 
 config VIDEO_INTEL_IPU_SOC
 	bool "Compile for SOC"
-	---help---
+	help
 	Select for SOC platform
 
 endchoice
 
 config VIDEO_INTEL_IPU_FW_LIB
 	bool "Compile firmware library"
-	---help---
+	help
 	If selected, the firmware hostlib css would be compiled
 
 config VIDEO_INTEL_IPU_WERROR
@@ -61,12 +61,12 @@ config VIDEO_INTEL_IPU_WERROR
 config VIDEO_INTEL_ICI
         depends on VIDEO_INTEL_IPU
         bool "Compile for ICI driver"
-        ---help---
+        help
         If selected ICI driver will be compiled
 
 config VIDEO_INTEL_UOS
         bool "Compile driver per UOS"
-        ---help---
+        help
         If selected UOS driver components will be compiled
 
 config VIDEO_INTEL_IPU_ACRN
@@ -81,12 +81,12 @@ choice
 config VIDEO_INTEL_IPU_VIRTIO_BE
     bool "Configure IPU4 as virtio backend"
     depends on VBS && VIDEO_INTEL_ICI
-        ---help---
+        help
     Configuring IPU4 driver as virtio backend
 
 config VIDEO_INTEL_IPU_VIRTIO_FE
     bool "Configure IPU4 as virtio frontend"
-    ---help---
+    help
     Configuring IPU4 driver as virtio frontend
 
 endchoice
