@@ -1546,7 +1546,7 @@ config VIDEO_IMX258
 	tristate "Sony IMX258 sensor support"
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the Sony
 	  IMX258 camera.
 
@@ -1557,7 +1557,7 @@ config VIDEO_IMX274
 	tristate "Sony IMX274 sensor support"
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a V4L2 sensor driver for the Sony IMX274
 	  CMOS image sensor.
 
@@ -1577,7 +1577,7 @@ config VIDEO_OV2659
 	depends on VIDEO_V4L2 && I2C
 	depends on MEDIA_CAMERA_SUPPORT
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV2659 camera.
 
@@ -1589,7 +1589,7 @@ config VIDEO_OV2680
 	depends on VIDEO_V4L2 && I2C && MEDIA_CONTROLLER
 	depends on MEDIA_CAMERA_SUPPORT
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV2680 camera.
 
@@ -1601,7 +1601,7 @@ config VIDEO_OV2685
 	depends on VIDEO_V4L2 && I2C && MEDIA_CONTROLLER
 	depends on MEDIA_CAMERA_SUPPORT
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV2685 camera.
 
@@ -1614,7 +1614,7 @@ config VIDEO_OV5640
 	depends on GPIOLIB && VIDEO_V4L2 && I2C && VIDEO_V4L2_SUBDEV_API
 	depends on MEDIA_CAMERA_SUPPORT
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the Omnivision
 	  OV5640 camera sensor with a MIPI CSI-2 interface.
 
@@ -1624,7 +1624,7 @@ config VIDEO_OV5645
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	depends on MEDIA_CAMERA_SUPPORT
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV5645 camera.
 
@@ -1636,7 +1636,7 @@ config VIDEO_OV5647
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	depends on MEDIA_CAMERA_SUPPORT
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV5647 camera.
 
@@ -1647,7 +1647,7 @@ config VIDEO_OV6650
 	tristate "OmniVision OV6650 sensor support"
 	depends on I2C && VIDEO_V4L2
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV6650 camera.
 
@@ -1660,7 +1660,7 @@ config VIDEO_OV5670
 	depends on MEDIA_CAMERA_SUPPORT
 	depends on MEDIA_CONTROLLER
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV5670 camera.
 
@@ -1671,7 +1671,7 @@ config VIDEO_OV5695
 	tristate "OmniVision OV5695 sensor support"
 	depends on I2C && VIDEO_V4L2
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV5695 camera.
 
@@ -1694,7 +1694,7 @@ config VIDEO_OV772X
 	tristate "OmniVision OV772x sensor support"
 	depends on I2C && VIDEO_V4L2
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV772x camera.
 
@@ -1705,7 +1705,7 @@ config VIDEO_OV7640
 	tristate "OmniVision OV7640 sensor support"
 	depends on I2C && VIDEO_V4L2
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV7640 camera.
 
@@ -1717,7 +1717,7 @@ config VIDEO_OV7670
 	depends on I2C && VIDEO_V4L2
 	depends on MEDIA_CAMERA_SUPPORT
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV7670 VGA camera.  It currently only works with the M88ALP01
 	  controller.
@@ -1726,14 +1726,14 @@ config VIDEO_OV7740
 	tristate "OmniVision OV7740 sensor support"
 	depends on I2C && VIDEO_V4L2
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV7740 VGA camera sensor.
 
 config VIDEO_OV9650
 	tristate "OmniVision OV9650/OV9652 sensor support"
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
-	help
+	---help---
 	  This is a V4L2 sensor driver for the Omnivision
 	  OV9650 and OV9652 camera sensors.
 
@@ -1742,7 +1742,7 @@ config VIDEO_OV13858
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	depends on MEDIA_CAMERA_SUPPORT
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the OmniVision
 	  OV13858 camera.
 
@@ -1750,7 +1750,7 @@ config VIDEO_VS6624
 	tristate "ST VS6624 sensor support"
 	depends on VIDEO_V4L2 && I2C
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the ST VS6624
 	  camera.
 
@@ -1762,7 +1762,7 @@ config VIDEO_MT9M032
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	depends on MEDIA_CAMERA_SUPPORT
 	select VIDEO_APTINA_PLL
-	help
+	---help---
 	  This driver supports MT9M032 camera sensors from Aptina, monochrome
 	  models only.
 
@@ -1778,7 +1778,7 @@ config VIDEO_MT9P031
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	depends on MEDIA_CAMERA_SUPPORT
 	select VIDEO_APTINA_PLL
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the Aptina
 	  (Micron) mt9p031 5 Mpixel camera.
 
@@ -1786,7 +1786,7 @@ config VIDEO_MT9T001
 	tristate "Aptina MT9T001 support"
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the Aptina
 	  (Micron) mt0t001 3 Mpixel camera.
 
@@ -1794,7 +1794,7 @@ config VIDEO_MT9T112
 	tristate "Aptina MT9T111/MT9T112 support"
 	depends on I2C && VIDEO_V4L2
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the Aptina
 	  (Micron) MT9T111 and MT9T112 3 Mpixel camera.
 
@@ -1805,7 +1805,7 @@ config VIDEO_MT9V011
 	tristate "Micron mt9v011 sensor support"
 	depends on I2C && VIDEO_V4L2
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the Micron
 	  mt0v011 1.3 Mpixel camera.  It currently only works with the
 	  em28xx driver.
@@ -1816,7 +1816,7 @@ config VIDEO_MT9V032
 	depends on MEDIA_CAMERA_SUPPORT
 	select REGMAP_I2C
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a Video4Linux2 sensor driver for the Micron
 	  MT9V032 752x480 CMOS sensor.
 
@@ -1835,14 +1835,14 @@ config VIDEO_SR030PC30
 	tristate "Siliconfile SR030PC30 sensor support"
 	depends on I2C && VIDEO_V4L2
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This driver supports SR030PC30 VGA camera from Siliconfile
 
 config VIDEO_NOON010PC30
 	tristate "Siliconfile NOON010PC30 sensor support"
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This driver supports NOON010PC30 CIF camera from Siliconfile
 
 source "drivers/media/i2c/m5mols/Kconfig"
@@ -1862,7 +1862,7 @@ config VIDEO_S5K6AA
 	tristate "Samsung S5K6AAFX sensor support"
 	depends on MEDIA_CAMERA_SUPPORT
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
-	help
+	---help---
 	  This is a V4L2 sensor driver for Samsung S5K6AA(FX) 1.3M
 	  camera sensor with an embedded SoC image signal processor.
 
@@ -1870,7 +1870,7 @@ config VIDEO_S5K6A3
 	tristate "Samsung S5K6A3 sensor support"
 	depends on MEDIA_CAMERA_SUPPORT
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
-	help
+	---help---
 	  This is a V4L2 sensor driver for Samsung S5K6A3 raw
 	  camera sensor.
 
@@ -1878,7 +1878,7 @@ config VIDEO_S5K4ECGX
 	tristate "Samsung S5K4ECGX sensor support"
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	select CRC32
-	help
+	---help---
 	  This is a V4L2 sensor driver for Samsung S5K4ECGX 5M
 	  camera sensor with an embedded SoC image signal processor.
 
@@ -1886,7 +1886,7 @@ config VIDEO_S5K5BAF
 	tristate "Samsung S5K5BAF sensor support"
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a V4L2 sensor driver for Samsung S5K5BAF 2M
 	  camera sensor with an embedded SoC image signal processor.
 
@@ -1898,7 +1898,7 @@ config VIDEO_S5C73M3
 	tristate "Samsung S5C73M3 sensor support"
 	depends on I2C && SPI && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
 	select V4L2_FWNODE
-	help
+	---help---
 	  This is a V4L2 sensor driver for Samsung S5C73M3
 	  8 Mpixel camera.
 
@@ -1908,7 +1908,7 @@ config VIDEO_ADP1653
 	tristate "ADP1653 flash support"
 	depends on I2C && VIDEO_V4L2 && MEDIA_CONTROLLER
 	depends on MEDIA_CAMERA_SUPPORT
-	help
+	---help---
 	  This is a driver for the ADP1653 flash controller. It is used for
 	  example in Nokia N900.
 
@@ -1917,7 +1917,7 @@ config VIDEO_LM3560
 	depends on I2C && VIDEO_V4L2 && MEDIA_CONTROLLER
 	depends on MEDIA_CAMERA_SUPPORT
 	select REGMAP_I2C
-	help
+	---help---
 	  This is a driver for the lm3560 dual flash controllers. It controls
 	  flash, torch LEDs.
 
@@ -1926,7 +1926,7 @@ config VIDEO_LM3646
 	depends on I2C && VIDEO_V4L2 && MEDIA_CONTROLLER
 	depends on MEDIA_CAMERA_SUPPORT
 	select REGMAP_I2C
-	help
+	---help---
 	  This is a driver for the lm3646 dual flash controllers. It controls
 	  flash, torch LEDs.
 
